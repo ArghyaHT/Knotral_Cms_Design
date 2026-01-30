@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Topbar.module.css"
 
-const Topbar = ({ onMenuClick, menuToggleRef }) => {
+const Topbar = ({ title, onMenuClick, menuToggleRef }) => {
     return (
         <div className={styles.topbar}>
             <div className={styles.topbarleft}>
@@ -15,10 +15,12 @@ const Topbar = ({ onMenuClick, menuToggleRef }) => {
                 >
                     ☰
                 </button>
-                <div className={styles.searchbox}>
+                {/* <div className={styles.searchbox}>
                     <span>🔍</span>
                     <input type="text" placeholder="Search..." />
-                </div>
+                </div> */}
+                <h1 className={styles.pagetitle}>{title}</h1>
+
             </div>
 
             <div className={styles.topbarright}>

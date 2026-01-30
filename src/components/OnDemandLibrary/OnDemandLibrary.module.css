@@ -1,0 +1,450 @@
+ /* ===== PAGE 1: ON-DEMAND LIBRARY ===== */
+ .libraryhero {
+     background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+     color: white;
+     padding: 60px 0 80px;
+ }
+
+ .libraryhero h1 {
+     font-size: 36px;
+     margin-bottom: 12px;
+ }
+
+ .libraryhero p {
+     font-size: 16px;
+     opacity: 0.9;
+     margin-bottom: 24px;
+ }
+
+ .librarysearch {
+     background: white;
+     border-radius: 12px;
+     padding: 6px;
+     display: flex;
+     gap: 8px;
+     max-width: 600px;
+     box-shadow: var(--shadow-large);
+ }
+
+ .librarysearch input {
+     flex: 1;
+     border: none;
+     padding: 14px 20px;
+     font-size: 15px;
+     border-radius: 8px;
+ }
+
+ .librarysearch input:focus {
+     outline: none;
+ }
+
+ .librarysearch button {
+     padding: 14px 28px;
+ }
+
+ .libraryfilters {
+     background: white;
+     padding: 20px 24px;
+     border-radius: 12px;
+     margin-top: -40px;
+     position: relative;
+     z-index: 10;
+     box-shadow: var(--shadow-card);
+     display: flex;
+     gap: 16px;
+     align-items: center;
+     flex-wrap: wrap;
+ }
+
+ .libraryfilters select {
+     padding: 10px 16px;
+     border: 1px solid var(--border-light);
+     border-radius: 6px;
+     font-size: 14px;
+     min-width: 150px;
+ }
+
+ .libraryfilters .resultscount {
+     margin-left: auto;
+     color: var(--text-muted);
+     font-size: 14px;
+ }
+
+ .videocard {
+  display: block;       /* Make the link behave like a block div */
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  text-decoration: none; /* Remove underline */
+  color: inherit;        /* Keep text color */
+  transition: box-shadow 0.2s;
+}
+
+.videocard:hover {
+  box-shadow: var(--shadow-card-hover);
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+ .videothumbnail {
+     width: 100%;
+     height: 160px;
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     position: relative;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .videothumbnail .playbtn {
+     width: 56px;
+     height: 56px;
+     background: rgba(255, 255, 255, 0.9);
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 20px;
+ }
+
+ .videothumbnail .duration {
+     position: absolute;
+     bottom: 8px;
+     right: 8px;
+     background: rgba(0, 0, 0, 0.7);
+     color: white;
+     padding: 4px 8px;
+     border-radius: 4px;
+     font-size: 12px;
+ }
+
+ .videocardbody {
+     padding: 16px;
+ }
+
+ .videocardbody h3 {
+     font-size: 15px;
+     font-weight: 600;
+     margin-bottom: 8px;
+     line-height: 1.4;
+ }
+
+ .videometa {
+     display: flex;
+     gap: 12px;
+     font-size: 12px;
+     color: var(--text-muted);
+     margin-bottom: 12px;
+ }
+
+ .videoprovider {
+     display: flex;
+     align-items: center;
+     gap: 8px;
+ }
+
+ .videoprovider img {
+     width: 24px;
+     height: 24px;
+     border-radius: 4px;
+     background: var(--bg-light);
+ }
+
+ .videorating {
+     display: flex;
+     align-items: center;
+     gap: 4px;
+ }
+
+ .videorating .star {
+     color: #FFB800;
+ }
+
+ .continuewatching {
+     background: white;
+     padding: 24px;
+     border-radius: 12px;
+     margin-bottom: 32px;
+     margin-top: 32px;
+ }
+
+ .continuewatching h3 {
+     font-size: 18px;
+     margin-bottom: 16px;
+ }
+
+ .progressbar {
+     height: 4px;
+     background: var(--border-light);
+     border-radius: 2px;
+     margin-top: 8px;
+ }
+
+ .progressbarfill {
+     height: 100%;
+     background: var(--accent-teal);
+     border-radius: 2px;
+ }
+
+ .herostats {
+     display: flex;
+     gap: 40px;
+     margin-top: 32px;
+ }
+
+ .herostat {
+     text-align: center;
+ }
+
+ .herostatvalue {
+     font-size: 32px;
+     font-weight: 700;
+ }
+
+ .herostatlabel {
+     font-size: 13px;
+     opacity: 0.8;
+ }
+
+ .badgegroup {
+  display: flex;
+  gap: 6px; 
+}
+
+@media (max-width: 1024px) {
+
+  .libraryhero {
+    padding: 50px 24px 70px;
+  }
+
+  .libraryhero h1 {
+    font-size: 30px;
+  }
+
+  .librarysearch {
+    max-width: 100%;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .videothumbnail {
+    height: 150px;
+  }
+
+  .herostats {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .libraryhero {
+    padding: 40px 16px 60px;
+    text-align: center;
+  }
+
+  .libraryhero h1 {
+    font-size: 26px;
+  }
+
+  .libraryhero p {
+    font-size: 14px;
+  }
+
+  .librarysearch {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .librarysearch button {
+    width: 100%;
+  }
+
+  .libraryfilters {
+    margin-top: -24px;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .libraryfilters select {
+    width: 100%;
+  }
+
+  .libraryfilters .resultscount {
+    width: 100%;
+    margin-left: 0;
+    font-size: 13px;
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .videothumbnail {
+    height: 140px;
+  }
+
+  .videocardbody h3 {
+    font-size: 14px;
+  }
+
+  .videometa {
+    font-size: 11px;
+  }
+
+  .badgegroup {
+    flex-wrap: wrap;
+  }
+
+  .herostats {
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .libraryhero h1 {
+    font-size: 22px;
+  }
+
+  .libraryhero p {
+    font-size: 13px;
+  }
+
+  .librarysearch input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .librarysearch button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .videothumbnail {
+    height: 120px;
+  }
+
+  .videothumbnail .playbtn {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .videothumbnail .duration {
+    font-size: 10px;
+  }
+
+  .videocardbody {
+    padding: 12px;
+  }
+
+  .videocardbody h3 {
+    font-size: 13px;
+  }
+
+  .videometa {
+    gap: 8px;
+  }
+
+  .videoprovider span {
+    font-size: 11px;
+  }
+
+  .herostatvalue {
+    font-size: 20px;
+  }
+
+  .herostatlabel {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+
+  .libraryhero {
+    padding: 32px 12px 48px;
+  }
+
+  .libraryhero h1 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .libraryhero p {
+    font-size: 12px;
+  }
+
+  .librarysearch {
+    padding: 4px;
+  }
+
+  .librarysearch input {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .librarysearch button {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .videothumbnail {
+    height: 110px;
+  }
+
+  .videothumbnail .playbtn {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+  }
+
+  .videothumbnail .duration {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  .videocardbody {
+    padding: 10px;
+  }
+
+  .videocardbody h3 {
+    font-size: 12px;
+  }
+
+  .videometa {
+    font-size: 10px;
+    gap: 6px;
+  }
+
+  .videoprovider img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .videoprovider span {
+    font-size: 10px;
+  }
+
+  .badgegroup {
+    gap: 4px;
+  }
+
+  .herostats {
+    gap: 12px;
+  }
+
+  .herostatvalue {
+    font-size: 18px;
+  }
+
+  .herostatlabel {
+    font-size: 10px;
+  }
+}

@@ -3,8 +3,24 @@
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Topbar from "@/components/Topbar/Topbar";
+import { usePathname } from "next/navigation";
 
-export default function CMSLayout({ children }) {
+const pageTitles = {
+    "/": "Dashboard",
+    "/webinar-list": "Manage Webinars",
+    "/create-webinar": "Add New Webinar",
+
+};
+
+export const getPageTitle = (pathname) => {
+    if (pathname.startsWith("/edit-webinar")) {
+        return "Edit Webinar";
+    }
+
+    return pageTitles[pathname] || "Dashboard";
+};
+
+export default function CMSLayout({ children, webinars = [] }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const sidebarRef = useRef(null);
     const menuToggleRef = useRef(null);
@@ -32,12 +48,15 @@ export default function CMSLayout({ children }) {
         }
     }, [sidebarOpen]);
 
+    const pathname = usePathname();
+
     return (
         <div className="cmscontainer">
-            <Sidebar ref={sidebarRef} open={sidebarOpen} />
+            <Sidebar ref={sidebarRef} open={sidebarOpen} webinars={{ count: webinars.length }} />
 
             <main className="maincontent">
                 <Topbar
+                    title={getPageTitle(pathname)}
                     onMenuClick={() => setSidebarOpen((o) => !o)}
                     menuToggleRef={menuToggleRef}
                 />

@@ -16,6 +16,13 @@
             gap: 1rem;
         }
 
+        .pagetitle {
+            font-size: 2.5rem;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
         .menutoggle {
             display: none;
             background: none;
@@ -109,20 +116,120 @@
         }
 
 
-         @media (max-width: 768px) {
-            .menutoggle {
-                display: block;
-            }
+     /* =========================
+   TABLETS & SMALL LAPTOPS
+   ========================= */
+@media (max-width: 1024px) {
+    .topbar {
+        padding: 0.8rem 1.5rem;
+    }
 
-            .searchbox {
-                width: 200px;
-            }
+    .pagetitle {
+        font-size: 1.6rem;
+    }
 
-            .statsgrid {
-                grid-template-columns: 1fr;
-            }
+    .searchbox {
+        width: 220px;
+    }
+}
 
-            .userinfo {
-                display: none;
-            }
-        }
+/* =========================
+   TABLETS & LARGE PHONES
+   ========================= */
+@media (max-width: 768px) {
+    .topbar {
+        padding: 0.75rem 1rem;
+    }
+
+    .menutoggle {
+        display: block;
+    }
+
+    .pagetitle {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+    }
+
+    .searchbox {
+        width: 180px;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .userinfo {
+        display: none;
+    }
+
+    .topbarright {
+        gap: 1rem;
+    }
+}
+
+/* =========================
+   SMALL PHONES
+   ========================= */
+@media (max-width: 480px) {
+    .topbar {
+        padding: 0.6rem 0.8rem;
+    }
+
+    .pagetitle {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .searchbox {
+        display: none;
+    }
+
+    .notificationbtn {
+        font-size: 1.1rem;
+    }
+
+    .useravatar {
+        width: 34px;
+        height: 34px;
+        font-size: 0.85rem;
+    }
+
+    .notificationbadge {
+        width: 16px;
+        height: 16px;
+        font-size: 0.65rem;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES (≤360px)
+   ========================= */
+@media (max-width: 360px) {
+    .topbar {
+        padding: 0.5rem 0.6rem;
+    }
+
+    .pagetitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.3px;
+    }
+
+    .topbarright {
+        gap: 0.6rem;
+    }
+
+    .notificationbtn {
+        font-size: 1rem;
+    }
+
+    .useravatar {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+    }
+
+    .notificationbadge {
+        width: 14px;
+        height: 14px;
+        font-size: 0.6rem;
+        top: -4px;
+        right: -4px;
+    }
+}

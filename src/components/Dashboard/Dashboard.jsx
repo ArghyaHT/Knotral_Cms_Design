@@ -2,18 +2,29 @@ import React from 'react'
 import Topbar from '../Topbar/Topbar'
 import styles from "./Dashboard.module.css"
 import Link from 'next/link'
+import moment from 'moment'
 
-const Dashboard = () => {
+const Dashboard = ({ webinars }) => {
+
+    const sortedWebinars = (webinars || [])
+  .sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf())
+  .slice(0, 5); 
+
+
+  const latestLiveWebinar = (webinars || [])
+  .filter(w => w.isLive) // only live webinars
+  .sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf())[0];
+
     return (
         <>
             <div className={styles.contentarea}>
                 <div className={styles.pageheader}>
-                    <h1 className={styles.pagetitle}>Dashboard</h1>
+                    {/* <h1 className={styles.pagetitle}>Dashboard</h1> */}
                     <p className={styles.pagesubtitle}>Welcome back! Here's what's happening with Knotral Training today.</p>
                 </div>
 
                 <div className={styles.statsgrid}>
-                    <div className={styles.statcard}>
+                    {/* <div className={styles.statcard}>
                         <div className={styles.statheader}>
                             <div>
                                 <div className={styles.statvalue}>12,487</div>
@@ -24,12 +35,12 @@ const Dashboard = () => {
                             </div>
                             <div className={styles.staticon}>👩‍🏫</div>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className={styles.statcard}>
                         <div className={styles.statheader}>
                             <div>
-                                <div className={styles.statvalue}>158</div>
+                                <div className={styles.statvalue}>{webinars.length}</div>
                                 <div className={styles.statlabel}>Total Webinars</div>
                                 <div className={`${styles.statchange} ${styles.positive}`}>
                                     ↑ 8 new this month
@@ -51,7 +62,7 @@ const Dashboard = () => {
                             <div className={styles.staticon}>📝</div>
                         </div>
                     </div>
-
+                    {/* 
                     <div className={styles.statcard}>
                         <div className={styles.statheader}>
                             <div>
@@ -63,14 +74,14 @@ const Dashboard = () => {
                             </div>
                             <div className={styles.staticon}>🌍</div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className={styles.contentgrid}>
                     <div className={styles.contentcard}>
                         <div className={styles.cardheader}>
                             <h2 className={styles.cardtitle}>Recent Webinars</h2>
-                            <a href="/cms/webinars" className={styles.cardaction}>View All →</a>
+                            <Link href="/webinar-list" className={styles.cardaction}>View All →</Link>
                         </div>
                         <div className={styles.cardbody}>
                             <table className={styles.datatable}>
@@ -83,7 +94,7 @@ const Dashboard = () => {
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                {/* <tbody>
                                     <tr>
                                         <td>AI in IB Mathematics</td>
                                         <td>Jan 08, 2026</td>
@@ -134,6 +145,39 @@ const Dashboard = () => {
                                             <button className={styles.actionbtn} title="View">👁️</button>
                                         </td>
                                     </tr>
+                                </tbody> */}
+                                <tbody>
+                                    {sortedWebinars.length > 0 ? (
+                                        sortedWebinars.map((webinar) => (
+                                            <tr key={webinar._id}>
+                                                <td>{webinar.title}</td>
+                                                <td>{moment(webinar.date).format("MMM DD, YYYY")}</td>
+                                                <td>{webinar.views || 0}</td>
+                                                <td>
+                                                    <span
+                                                        className={`${styles.statusbadge} ${webinar.isLive ? styles.live : webinar.isStopped ? styles.completed : styles.upcoming
+                                                            }`}
+                                                    >
+                                                        {webinar.isLive ? "Live" : webinar.isStopped ? "Completed" : "Upcoming"}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <button className={styles.actionbtn} title="Edit">
+                                                        ✏️
+                                                    </button>
+                                                    <button className={styles.actionbtn} title="View">
+                                                        👁️
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={5} style={{ textAlign: "center" }}>
+                                                No webinars found
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -146,41 +190,41 @@ const Dashboard = () => {
                         </div>
                         <div className={styles.cardbody}>
                             <ul className={styles.activitylist}>
-                                <li className={styles.activityitem}>
+                                {/* <li className={styles.activityitem}>
                                     <div className={`${styles.activityicon} ${styles.newuser}`}>👤</div>
                                     <div className={styles.activitycontent}>
                                         <div className={styles.activitytitle}>25 new teachers registered</div>
                                         <div className={styles.activitytime}>2 hours ago</div>
                                     </div>
-                                </li>
+                                </li> */}
                                 <li className={styles.activityitem}>
                                     <div className={`${styles.activityicon} ${styles.newwebinar}`}>🎓</div>
                                     <div className={styles.activitycontent}>
-                                        <div className={styles.activitytitle}>New webinar published: "EdTech Trends 2026"</div>
-                                        <div className={styles.activitytime}>5 hours ago</div>
+                                        <div className={styles.activitytitle}>New webinar published: "{latestLiveWebinar.title}"</div>
+                                        <div className={styles.activitytime}>{moment(latestLiveWebinar.createdAt).fromNow()}</div>
                                     </div>
                                 </li>
-                                <li className={styles.activityitem}>
+                                {/* <li className={styles.activityitem}>
                                     <div className={`${styles.activityicon} ${styles.registration}`}>📝</div>
                                     <div className={styles.activitycontent}>
                                         <div className={styles.activitytitle}>156 registrations for upcoming sessions</div>
                                         <div className={styles.activitytime}>1 day ago</div>
                                     </div>
-                                </li>
-                                <li className={styles.activityitem}>
+                                </li> */}
+                                {/* <li className={styles.activityitem}>
                                     <div className={`${styles.activityicon} ${styles.newuser}`}>🏫</div>
                                     <div className={styles.activitycontent}>
                                         <div className={styles.activitytitle}>Delhi Public School joined as partner</div>
                                         <div className={styles.activitytime}>2 days ago</div>
                                     </div>
-                                </li>
-                                <li className={styles.activityitem}>
+                                </li> */}
+                                {/* <li className={styles.activityitem}>
                                     <div className={`${styles.activityicon} ${styles.newwebinar}`}>🎓</div>
                                     <div className={styles.activitycontent}>
                                         <div className={styles.activitytitle}>Webinar completed: 234 certificates issued</div>
                                         <div className={styles.activitytime}>3 days ago</div>
                                     </div>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                     </div>
@@ -192,7 +236,7 @@ const Dashboard = () => {
                     </div>
                     <div className={styles.cardbody}>
                         <div className={styles.quickactions}>
-                             <Link href="/create-webinar" className={styles.quickactionbtn}>
+                            <Link href="/create-webinar" className={styles.quickactionbtn}>
                                 <div className={styles.quickactionicon}>➕</div>
                                 <div className={styles.quickactionlabel}>Add New Webinar</div>
                             </Link>
@@ -204,10 +248,10 @@ const Dashboard = () => {
                                 <div className={styles.quickactionicon}>✉️</div>
                                 <div className={styles.quickactionlabel}>Send Email Campaign</div>
                             </a>
-                            <a href="/cms/reports" className={styles.quickactionbtn}>
+                            {/* <a href="/cms/reports" className={styles.quickactionbtn}>
                                 <div className={styles.quickactionicon}>📊</div>
                                 <div className={styles.quickactionlabel}>Generate Report</div>
-                            </a>
+                            </a> */}
                         </div>
                     </div>
                 </div>

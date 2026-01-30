@@ -1,10 +1,9 @@
 "use client"
-import React, { useState } from "react";
-import styles from "./CreateWebinar.module.css"
-import slugify from "slugify";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from 'react'
+import styles from "./EditWebinar.module.css"
+import { useRouter } from 'next/navigation';
 
-const CreateWebinar = () => {
+const EditWebinar = ({ webinar }) => {
     const router = useRouter();
 
     const [title, setTitle] = useState("");
@@ -36,6 +35,7 @@ const CreateWebinar = () => {
     const [ogImageFile, setOgImageFile] = useState(null);
 
     // Trainer info
+    const [trainerId, setTrainerId] = useState("");
     const [trainerName, setTrainerName] = useState("");
     const [trainerDesignation, setTrainerDesignation] = useState("");
     const [trainerWorksAt, setTrainerWorksAt] = useState("");
@@ -64,6 +64,31 @@ const CreateWebinar = () => {
 
     const [ogImagePreview, setOgImagePreview] = useState(null);
 
+    const [pastSessions, setPastSessions] = useState([
+        { title: "", youtubeUrl: "", date: "" },
+    ]);
+
+    //Past Sessions Change
+    const handlePastSessionChange = (index, field, value) => {
+        setPastSessions(prev =>
+            prev.map((session, i) =>
+                i === index ? { ...session, [field]: value } : session
+            )
+        );
+    };
+
+    const addPastSession = () => {
+        setPastSessions(prev => [
+            ...prev,
+            { title: "", youtubeUrl: "", date: "" } // new empty session
+        ]);
+    };
+
+    const removePastSession = (index) => {
+        setPastSessions(prev => prev.filter((_, i) => i !== index));
+    };
+
+    //Title change
     const handleTitleChange = (value) => {
         setTitle(value);
 
@@ -75,6 +100,7 @@ const CreateWebinar = () => {
     };
 
 
+    //Session Agenda change
     const addAgendaItem = () => {
         setSessionAgenda([
             ...sessionAgenda,
@@ -92,6 +118,7 @@ const CreateWebinar = () => {
         setSessionAgenda(updated);
     };
 
+    //Feature change
     const handleFeatureChange = (index, value) => {
         const updated = [...teachersBenefitsFeatures];
         updated[index] = value;
@@ -107,6 +134,7 @@ const CreateWebinar = () => {
         setTeachersBenefitsFeatures(updated);
     };
 
+    //Why Needed change
     const addWhyNeeded = () => {
         setTeachersBenefitsWhyNeeded([...teachersBenefitsWhyNeeded, ""]);
     };
@@ -124,6 +152,7 @@ const CreateWebinar = () => {
     };
 
 
+    //School Feature change
     const addSchoolFeature = () => {
         setSchoolBenefitsFeatures([...schoolBenefitsFeatures, ""]);
     };
@@ -140,6 +169,7 @@ const CreateWebinar = () => {
         setSchoolBenefitsFeatures(updated);
     };
 
+    //Resellers change
     const addResellerFeature = () => {
         setResellerBenefitsFeatures([...resellerBenefitsFeatures, ""]);
     };
@@ -156,6 +186,7 @@ const CreateWebinar = () => {
         setResellerBenefitsFeatures(updated);
     };
 
+    //Webinar Feature
     const addWebinarFeature = () => {
         setFeatures([...features, { feature: "" }]);
     };
@@ -170,6 +201,7 @@ const CreateWebinar = () => {
         setFeatures(updated);
     };
 
+    //Attendee Benifir
     const addAttendeeBenefit = () => {
         setAttendeeBenefitsFeatures([...attendeeBenefitsFeatures, ""]);
     };
@@ -186,6 +218,7 @@ const CreateWebinar = () => {
         setAttendeeBenefitsFeatures(updated);
     };
 
+    //Logo
     const handleLogoChange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -204,6 +237,7 @@ const CreateWebinar = () => {
         setLogoPreview(URL.createObjectURL(file));
     };
 
+    //Trainer Image
     const handleTrainerImageChange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -212,6 +246,7 @@ const CreateWebinar = () => {
         setTrainerPreview(URL.createObjectURL(file));
     };
 
+    //Og Image
     const handleOgImageChange = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -219,6 +254,130 @@ const CreateWebinar = () => {
         setOgImageFile(file);
         setOgImagePreview(URL.createObjectURL(file));
     };
+
+    //Time conversion
+    const extractMinutes = (duration) => {
+        if (!duration) return "";
+
+        const hours = duration.match(/(\d+)\s*hour/)?.[1] || 0;
+        const minutes = duration.match(/(\d+)\s*minute/)?.[1] || 0;
+
+        return Number(hours) * 60 + Number(minutes);
+    };
+
+    //Time Conversion
+    const convertTo24Hour = (time12) => {
+        if (!time12) return "";
+
+        const match = time12.match(/(\d+):(\d+)\s*(AM|PM)/i);
+        if (!match) return "";
+
+        let [, hour, minute, ampm] = match;
+        hour = Number(hour);
+
+        if (ampm.toUpperCase() === "PM" && hour !== 12) hour += 12;
+        if (ampm.toUpperCase() === "AM" && hour === 12) hour = 0;
+
+        return `${hour.toString().padStart(2, "0")}:${minute}`;
+    };
+
+
+    useEffect(() => {
+        if (!webinar) return;
+
+        setTitle(webinar.title || "");
+        setDescription(webinar.description || "");
+        setOrganisedBy(webinar.organisedBy || "");
+        setCategory(webinar.category || "");
+        setDate(webinar.date ? webinar.date.split("T")[0] : "");
+        setStartTime(convertTo24Hour(webinar.startTime));
+        setDuration(extractMinutes(webinar.duration));
+        setPrice(webinar.price || "");
+        setIsFree(webinar.isFree ?? true);
+        setIsLive(webinar.isLive ?? false);
+        setIsCertified(webinar.isCertified ?? false);
+        setIsOnDemand(webinar.isOnDemand ?? false);
+
+        setBonus(webinar.bonus?.title || "");
+
+        setSlug(webinar.slug || "");
+        setSlugEdited(true); // IMPORTANT: prevent auto-regeneration
+
+        setMetaTitle(webinar.metaTitle || "");
+        setMetaDescription(webinar.metaDescription || "");
+        setSchemaMarkup(webinar.schemaMarkup || "");
+
+        if (!webinar?.trainer?.length) return;
+
+        const trainer = webinar.trainer[0];
+
+        setTrainerId(trainer._id || "");
+        setTrainerName(trainer.trainerName || "");
+        setTrainerDesignation(trainer.designation || "");
+        setTrainerWorksAt(trainer.worksAt || "");
+        setTrainerDescription(trainer.description || "");
+
+        // Links
+        setLink(webinar.link || "");
+
+        // Arrays
+        setSessionAgenda(webinar.sessionAgenda?.length ? webinar.sessionAgenda : [{ time: "", title: "" }]);
+
+        setTeachersBenefitsFeatures(
+            webinar.teachersBenifits?.features?.length
+                ? webinar.teachersBenifits.features
+                : [""]
+        );
+
+        setTeachersBenefitsWhyNeeded(
+            webinar.teachersBenifits?.whyNeeded?.length
+                ? webinar.teachersBenifits.whyNeeded
+                : [""]
+        );
+
+        setSchoolBenefitsFeatures(
+            webinar.schoolBenifits?.features?.length
+                ? webinar.schoolBenifits.features
+                : [""]
+        );
+
+        setResellerBenefitsFeatures(
+            webinar.resellerBenifits?.features?.length
+                ? webinar.resellerBenifits.features
+                : [""]
+        );
+
+        setFeatures(
+            webinar.features?.length
+                ? webinar.features.map(f => ({ feature: f.feature }))
+                : [{ feature: "" }]
+        );
+
+        setAttendeeBenefitsFeatures(
+            webinar.attendeeBenefits?.features?.length
+                ? webinar.attendeeBenefits.features
+                : [""]
+        );
+
+           if (!webinar?.pastSessions?.length) return;
+
+        const sessions = webinar.pastSessions.map(session => ({
+            title: session.title || "",
+            youtubeUrl: session.youtubeId ? `https://www.youtube.com/watch?v=${session.youtubeId}` : "",
+            date: session.date ? session.date.split("T")[0] : "",
+        }));
+
+        setPastSessions(sessions);
+
+        // Images (preview only)
+        setLogoPreview(webinar.logo?.url || null);
+        setTrainerPreview(webinar.trainer?.[0]?.trainerImage?.url || null);
+        setOgImagePreview(webinar.ogImage?.url || null);
+
+    }, [webinar]);
+
+
+    // console.log("trainerId data",trainerId)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -249,7 +408,7 @@ const CreateWebinar = () => {
         const cleanedSchemaMarkup = schemaMarkup?.trim();
 
         try {
-            // Step 1: Create webinar
+            // Step 1: Update webinar
             const webinarPayload = {
                 title,
                 slug,
@@ -289,20 +448,24 @@ const CreateWebinar = () => {
 
             };
 
-            console.log(webinarPayload)
+            const updateRes = await fetch(
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/update-webinar`,
+                {
+                    method: "PUT", // or POST if backend expects POST
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        webinarId: webinar._id,
+                        ...webinarPayload,
+                    }),
+                }
+            );
 
-            const createRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/create-webinar`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(webinarPayload)
-            });
 
-            const webinarData = await createRes.json();
-            if (!createRes.ok) throw new Error(webinarData.message || "Error creating webinar");
 
-            // console.log("webinar data", webinarData)
+            const webinarData = await updateRes.json();
+            if (!updateRes.ok) throw new Error(webinarData.message || "Error creating webinar");
 
-            const webinarId = webinarData.response._id; // make sure your API returns webinar id
+            const webinarId = webinar._id; // make sure your API returns webinar id
 
             // console.log("webinar Id", webinarId)
 
@@ -321,22 +484,24 @@ const CreateWebinar = () => {
             }
 
             // Upload trainer
-            if (trainerName && trainerDesignation && trainerWorksAt) {
+            if (trainerName || trainerDesignation || trainerWorksAt || trainerDescription || trainerImageFile) {
                 const fdTrainer = new FormData();
                 fdTrainer.append("webinarId", webinarId);
+                fdTrainer.append("trainerId", trainerId);
                 fdTrainer.append("trainerName", trainerName);
                 fdTrainer.append("designation", trainerDesignation);
                 fdTrainer.append("worksAt", trainerWorksAt);
                 fdTrainer.append("description", trainerDescription);
-                if (trainerImageFile) fdTrainer.append("trainerImage", trainerImageFile); // key matches backend
+                if (trainerImageFile) fdTrainer.append("image", trainerImageFile);
 
-                const trainerRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/add-trainer`, {
+                const trainerRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/update-trainer`, {
                     method: "POST",
-                    body: fdTrainer, // do not set headers
+                    body: fdTrainer,
                 });
 
                 const trainerData = await trainerRes.json();
-                if (!trainerRes.ok) throw new Error(trainerData.message || "Trainer upload failed");
+                if (!trainerRes.ok) throw new Error(trainerData.message || "Trainer update failed");
+
             }
 
             if (ogImageFile) {
@@ -358,6 +523,30 @@ const CreateWebinar = () => {
                 }
             }
 
+            const validPastSessions = pastSessions.filter(
+                session =>
+                    session.title?.trim() &&
+                    session.youtubeUrl?.trim() &&
+                    session.date
+            );
+
+            console.log("Valid Past sessions", validPastSessions)
+
+            const payload = {
+                webinarId,
+                pastSessions: validPastSessions,
+            };
+
+            console.log(payload)
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/upload-past-sessions`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
             // Redirect to webinar list
             router.push("/webinar-list");
 
@@ -367,45 +556,73 @@ const CreateWebinar = () => {
             alert(error.message || "Something went wrong");
         }
     };
-    const handleCancel = () => {
-        // Reset all states
-        setTitle("");
-        setSlug("");
-        setDescription("");
-        setOrganisedBy("");
-        setCategory("");
-        setDate("");
-        setStartTime("");
-        setDuration("");
-        setPrice("");
-        setIsFree(true);
-        setIsLive(true);
-        setIsCertified(false);
-        setIsOnDemand(false);
-        setBonus("");
-        setLink("");
-        setFeatures([{ feature: "" }]);
-        setSessionAgenda([{ time: "", title: "" }]);
-        setTeachersBenefitsFeatures([""]);
-        setTeachersBenefitsWhyNeeded([""]);
-        setSchoolBenefitsFeatures([""]);
-        setResellerBenefitsFeatures([""]);
-        setAttendeeBenefitsFeatures([""]);
-        setMetaTitle("");
-        setMetaDescription("");
-        setSchemaMarkup("");
-        setLogoFile(null);
-        setTrainerImageFile(null);
-        setOgImageFile(null);
-        setLogoPreview(null);
-        setTrainerPreview(null);
-        setOgImagePreview(null);
-        setTrainerName("");
-        setTrainerDesignation("");
-        setTrainerWorksAt("");
-        setTrainerDescription("");
-    };
 
+    const handleCancel = () => {
+        if (!webinar) return; // no data, maybe create mode
+
+        // Revert all fields to webinar's original values
+        setTitle(webinar.title || "");
+        setDescription(webinar.description || "");
+        setOrganisedBy(webinar.organisedBy || "");
+        setCategory(webinar.category || "");
+        setDate(webinar.date ? webinar.date.split("T")[0] : "");
+        setStartTime(convertTo24Hour(webinar.startTime));
+        setDuration(extractMinutes(webinar.duration));
+        setPrice(webinar.price || "");
+        setIsFree(webinar.isFree ?? true);
+        setIsLive(webinar.isLive ?? false);
+        setIsCertified(webinar.isCertified ?? false);
+        setIsOnDemand(webinar.isOnDemand ?? false);
+
+        setBonus(webinar.bonus?.title || "");
+        setLink(webinar.link || "");
+        setSlug(webinar.slug || "");
+        setSlugEdited(true); // prevent slug regeneration
+
+        setFeatures(
+            webinar.features?.length ? webinar.features.map(f => ({ feature: f.feature })) : [{ feature: "" }]
+        );
+
+        setSessionAgenda(
+            webinar.sessionAgenda?.length ? webinar.sessionAgenda : [{ time: "", title: "" }]
+        );
+
+        setTeachersBenefitsFeatures(
+            webinar.teachersBenifits?.features?.length ? webinar.teachersBenifits.features : [""]
+        );
+
+        setTeachersBenefitsWhyNeeded(
+            webinar.teachersBenifits?.whyNeeded?.length ? webinar.teachersBenifits.whyNeeded : [""]
+        );
+
+        setSchoolBenefitsFeatures(
+            webinar.schoolBenifits?.features?.length ? webinar.schoolBenifits.features : [""]
+        );
+
+        setResellerBenefitsFeatures(
+            webinar.resellerBenifits?.features?.length ? webinar.resellerBenifits.features : [""]
+        );
+
+        setAttendeeBenefitsFeatures(
+            webinar.attendeeBenefits?.features?.length ? webinar.attendeeBenefits.features : [""]
+        );
+
+        setMetaTitle(webinar.metaTitle || "");
+        setMetaDescription(webinar.metaDescription || "");
+        setSchemaMarkup(webinar.schemaMarkup || "");
+
+        setLogoPreview(webinar.logo?.url || null);
+        setTrainerPreview(webinar.trainer?.[0]?.trainerImage?.url || null);
+        setOgImagePreview(webinar.ogImage?.url || null);
+
+        const trainer = webinar.trainer?.[0];
+        if (trainer) {
+            setTrainerName(trainer.trainerName || "");
+            setTrainerDesignation(trainer.designation || "");
+            setTrainerWorksAt(trainer.worksAt || "");
+            setTrainerDescription(trainer.description || "");
+        }
+    };
 
     return (
         <div className={styles.contentarea}>
@@ -414,7 +631,7 @@ const CreateWebinar = () => {
                 <div>
                     <div className={styles.breadcrumb}>
                         <a href="/">Dashboard</a> /{" "}
-                        <a href="/webinar-list">Webinars</a> / Add New
+                        <a href="/webinar-list">Webinars</a> / Edit Webinar
                     </div>
                     {/* <h1 className={styles.pagetitle}>Add New Webinar</h1> */}
                 </div>
@@ -1266,9 +1483,77 @@ const CreateWebinar = () => {
                                     required
                                 />
                             </div>
-
                         </div>
 
+
+                        {/* Past Sessions */}
+                        <div className={styles.formsection}>
+                            <h2 className={styles.sectiontitle}>Past Sessions</h2>
+
+                            {pastSessions.map((session, index) => (
+                                <div key={index} className={styles.pastSessionItem}>
+                                    <div className={styles.formrow}>
+                                        <div className={styles.formgroup}>
+                                            <label className={styles.formlabel}>Title</label>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder="Session Title"
+                                                value={session.title}
+                                                onChange={(e) =>
+                                                    handlePastSessionChange(index, "title", e.target.value)
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className={styles.formgroup}>
+                                            <label className={styles.formlabel}>YouTube URL</label>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder="https://youtube.com/..."
+                                                value={session.youtubeUrl}
+                                                onChange={(e) =>
+                                                    handlePastSessionChange(index, "youtubeUrl", e.target.value)
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className={styles.formgroup}>
+                                            <label className={styles.formlabel}>Date</label>
+                                            <input
+                                                type="date"
+                                                className={styles.forminput}
+                                                value={session.date}
+                                                onChange={(e) =>
+                                                    handlePastSessionChange(index, "date", e.target.value)
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Remove button outside formrow for smaller size */}
+                                    <div className={styles.btnContainer}>
+                                        <button
+                                            type="button"
+                                            className={styles.btnremove}
+                                            onClick={() => removePastSession(index)}
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {/* Add new past session */}
+                            <button
+                                type="button"
+                                className={`${styles.btn} ${styles.uploadbtn}`}
+                                onClick={addPastSession}
+                            >
+                                Add Past Session
+                            </button>
+                        </div>
 
 
                         {/* Certificate & CPD */}
@@ -1322,7 +1607,7 @@ const CreateWebinar = () => {
                         {/* Actions */}
                         <div className={styles.formactions}>
                             <button type="submit" className={`${styles.btn} ${styles.btnprimary}`}>
-                                Publish Webinar
+                                Edit Webinar
                             </button>
                             {/* <button type="button" className={`${styles.btn} ${styles.btnsecondary}`}>
                                 Save as Draft
@@ -1517,7 +1802,7 @@ const CreateWebinar = () => {
                                     value={slug}
                                     onChange={(e) => {
                                         setSlug(e.target.value); // allow manual editing
-                                        setSlugEdited(true);     // mark that user manually edited
+                                        setSlugEdited(!!webinar?.slug);
                                     }}
                                 />
                             </div>
@@ -1528,6 +1813,6 @@ const CreateWebinar = () => {
             </form>
         </div>
     );
-};
+}
 
-export default CreateWebinar;
+export default EditWebinar

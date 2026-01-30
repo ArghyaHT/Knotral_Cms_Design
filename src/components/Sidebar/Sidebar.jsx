@@ -3,7 +3,7 @@ import styles from "./Sidebar.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Sidebar = React.forwardRef(({ open }, ref) => {
+const Sidebar = React.forwardRef(({ open, webinars }, ref) => {
     const pathname = usePathname(); // App router
 
     return (
@@ -28,10 +28,16 @@ const Sidebar = React.forwardRef(({ open }, ref) => {
                         <span className={styles.navicon}>📊</span>
                         Dashboard
                     </Link>
-                    <a href="/cms/analytics" className={styles.navitem}>
+                    {/* <a href="/cms/analytics" className={styles.navitem}>
                         <span className={styles.navicon}>📈</span>
                         Analytics
-                    </a>
+                    </a> */}
+                    {/* <Link
+                     href="/on-demand-library" 
+                     className={`${styles.navitem} ${pathname === "/on-demand-library" ? styles.active : ""}`}>
+                        <span className={styles.navicon}>📹</span>
+                        On-Demand Library
+                    </Link> */}
                 </div>
 
                 <div className={styles.navsection}>
@@ -42,23 +48,31 @@ const Sidebar = React.forwardRef(({ open }, ref) => {
                     >
                         <span className={styles.navicon}>🎓</span>
                         Webinars
-                        <span className={styles.navbadge}>12</span>
+                        <span className={styles.navbadge}>{webinars?.count ?? 0}</span>
                     </Link>
-                    <a href="/cms/certifications" className={styles.navitem}>
+
+                     <Link
+                        href="/create-webinar"
+                        className={`${styles.navitem} ${pathname === "/create-webinar" ? styles.active : ""}`}
+                    >
+                        <span className={styles.navicon}>📁</span>
+                        Create Webinars
+                    </Link>
+                    {/* <a href="/cms/certifications" className={styles.navitem}>
                         <span className={styles.navicon}>🏆</span>
                         Certifications
-                    </a>
-                    <a href="/cms/categories" className={styles.navitem}>
+                    </a> */}
+                    {/* <a href="/cms/categories" className={styles.navitem}>
                         <span className={styles.navicon}>📁</span>
                         Categories
-                    </a>
-                    <a href="/cms/providers" className={styles.navitem}>
+                    </a> */}
+                    {/* <a href="/cms/providers" className={styles.navitem}>
                         <span className={styles.navicon}>🌍</span>
                         Solution Providers
-                    </a>
+                    </a> */}
                 </div>
 
-                <div className={styles.navsection}>
+                {/* <div className={styles.navsection}>
                     <div className={styles.navsectiontitle}>Users</div>
                     <Link
                         href="/teachers"
@@ -76,9 +90,9 @@ const Sidebar = React.forwardRef(({ open }, ref) => {
                         Registrations
                         <span className={styles.navbadge}>45</span>
                     </a>
-                </div>
+                </div> */}
 
-                <div className={styles.navsection}>
+                {/* <div className={styles.navsection}>
                     <div className={styles.navsectiontitle}>Communication</div>
                     <a href="/cms/emails" className={styles.navitem}>
                         <span className={styles.navicon}>✉️</span>
@@ -93,9 +107,9 @@ const Sidebar = React.forwardRef(({ open }, ref) => {
                         Contact Inquiries
                         <span className={styles.navbadge}>8</span>
                     </a>
-                </div>
+                </div> */}
 
-                <div className={styles.navsection}>
+                {/* <div className={styles.navsection}>
                     <div className={styles.navsectiontitle}>Settings</div>
                     <a href="/cms/pages" className={styles.navitem}>
                         <span className={styles.navicon}>📄</span>
@@ -109,7 +123,7 @@ const Sidebar = React.forwardRef(({ open }, ref) => {
                         <span className={styles.navicon}>⚙️</span>
                         Settings
                     </a>
-                </div>
+                </div> */}
             </nav>
         </aside>
     );
