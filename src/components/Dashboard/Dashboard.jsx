@@ -1,19 +1,28 @@
+"use client"
 import React from 'react'
 import Topbar from '../Topbar/Topbar'
 import styles from "./Dashboard.module.css"
 import Link from 'next/link'
 import moment from 'moment'
+import { useRouter } from 'next/navigation'
 
 const Dashboard = ({ webinars }) => {
 
+    const router = useRouter();
+
     const sortedWebinars = (webinars || [])
-  .sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf())
-  .slice(0, 5); 
+        .sort((a, b) => moment(a.date).valueOf() - moment(b.date).valueOf())
+        .slice(0, 5);
 
 
-  const latestLiveWebinar = (webinars || [])
-  .filter(w => w.isLive) // only live webinars
-  .sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf())[0];
+    const latestLiveWebinar = (webinars || [])
+        .filter(w => w.isLive) // only live webinars
+        .sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf())[0];
+
+
+    const newWebinarsThisMonth = (webinars || []).filter(w =>
+        moment(w.createdAt).isSame(moment(), "month")
+    ).length;
 
     return (
         <>
@@ -42,8 +51,13 @@ const Dashboard = ({ webinars }) => {
                             <div>
                                 <div className={styles.statvalue}>{webinars.length}</div>
                                 <div className={styles.statlabel}>Total Webinars</div>
-                                <div className={`${styles.statchange} ${styles.positive}`}>
-                                    ↑ 8 new this month
+                                <div
+                                    className={`${styles.statchange} ${newWebinarsThisMonth > 0 ? styles.positive : styles.neutral
+                                        }`}
+                                >
+                                    {newWebinarsThisMonth > 0
+                                        ? `↑ ${newWebinarsThisMonth} new this month`
+                                        : "No new webinars this month"}
                                 </div>
                             </div>
                             <div className={styles.staticon}>🎓</div>
@@ -94,58 +108,6 @@ const Dashboard = ({ webinars }) => {
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                {/* <tbody>
-                                    <tr>
-                                        <td>AI in IB Mathematics</td>
-                                        <td>Jan 08, 2026</td>
-                                        <td>234</td>
-                                        <td><span className={`${styles.statusbadge} ${styles.upcoming}`}>Upcoming</span></td>
-                                        <td>
-                                            <button className={styles.actionbtn} title="Edit">✏️</button>
-                                            <button className={styles.actionbtn} title="View">👁️</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gamified Abacus Learning</td>
-                                        <td>Jan 06, 2026</td>
-                                        <td>189</td>
-                                        <td><span className={`${styles.statusbadge} ${styles.live}`}>Live</span></td>
-                                        <td>
-                                            <button className={styles.actionbtn} title="Edit">✏️</button>
-                                            <button className={styles.actionbtn} title="View">👁️</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>SEL Workshop KG-5</td>
-                                        <td>Jan 13, 2026</td>
-                                        <td>456</td>
-                                        <td><span className={`${styles.statusbadge} ${styles.upcoming}`}>Upcoming</span></td>
-                                        <td>
-                                            <button className={styles.actionbtn} title="Edit">✏️</button>
-                                            <button className={styles.actionbtn} title="View">👁️</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Spelling Builds Literacy</td>
-                                        <td>Jan 13, 2026</td>
-                                        <td>312</td>
-                                        <td><span className={`${styles.statusbadge} ${styles.upcoming}`}>Upcoming</span></td>
-                                        <td>
-                                            <button className={styles.actionbtn} title="Edit">✏️</button>
-                                            <button className={styles.actionbtn} title="View">👁️</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Reggio Emilia Approach</td>
-                                        <td>Dec 28, 2025</td>
-                                        <td>567</td>
-                                        <td><span className={`${styles.statusbadge} ${styles.completed}`}>Completed</span></td>
-                                        <td>
-                                            <button className={styles.actionbtn} title="Edit">✏️</button>
-                                            <button className={styles.actionbtn} title="View">👁️</button>
-                                        </td>
-                                    </tr>
-                                </tbody> */}
                                 <tbody>
                                     {sortedWebinars.length > 0 ? (
                                         sortedWebinars.map((webinar) => (
@@ -162,12 +124,15 @@ const Dashboard = ({ webinars }) => {
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <button className={styles.actionbtn} title="Edit">
+                                                    <button className={styles.actionbtn}
+                                                        onClick={() => router.push(`/edit-webinar/${webinar.slug}`)}
+
+                                                        title="Edit">
                                                         ✏️
                                                     </button>
-                                                    <button className={styles.actionbtn} title="View">
+                                                    {/* <button className={styles.actionbtn} title="View">
                                                         👁️
-                                                    </button>
+                                                    </button> */}
                                                 </td>
                                             </tr>
                                         ))
