@@ -111,7 +111,7 @@ const WebinarList = ({ webinars, pagination, filters }) => {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/delete-webinar`,
                 {
-                    method: "POST", // or DELETE if your API supports it
+                    method: "POST", 
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -176,11 +176,8 @@ const WebinarList = ({ webinars, pagination, filters }) => {
                     >
                         <option value="">All Status</option>
                         <option value="live">Live</option>
-                        <option value="ondemand">On-Demand</option>
                         <option value="certified">Certification</option>
-                        <option value="upcoming">Upcoming</option>
                         <option value="completed">Completed</option>
-                        <option value="draft">Draft</option>
                     </select>
                 </div>
                 <div className={styles.filtergroup}>

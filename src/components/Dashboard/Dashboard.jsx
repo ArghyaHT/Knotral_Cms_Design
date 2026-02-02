@@ -19,10 +19,9 @@ const Dashboard = ({ webinars }) => {
         .filter(w => w.isLive) // only live webinars
         .sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf())[0];
 
-
     const newWebinarsThisMonth = (webinars || []).filter(w =>
-        moment(w.createdAt).isSame(moment(), "month")
-    ).length;
+  moment(w.date).isSame(moment(), "month")
+).length;
 
     return (
         <>
@@ -63,7 +62,7 @@ const Dashboard = ({ webinars }) => {
                             <div className={styles.staticon}>🎓</div>
                         </div>
                     </div>
-
+{/* 
                     <div className={styles.statcard}>
                         <div className={styles.statheader}>
                             <div>
@@ -75,7 +74,7 @@ const Dashboard = ({ webinars }) => {
                             </div>
                             <div className={styles.staticon}>📝</div>
                         </div>
-                    </div>
+                    </div> */}
                     {/* 
                     <div className={styles.statcard}>
                         <div className={styles.statheader}>

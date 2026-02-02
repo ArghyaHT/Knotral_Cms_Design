@@ -21,7 +21,7 @@ export default async function Page({searchParams}) {
   }).toString();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/get-limited-webinars?${query}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/webinars/get-all-webinars?${query}`,
     { cache: "no-store" }
   );
 
