@@ -6,7 +6,7 @@ import Topbar from "@/components/Topbar/Topbar";
 import { usePathname } from "next/navigation";
 
 const pageTitles = {
-    "/": "Dashboard",
+    "/dashboard": "Dashboard",
     "/webinar-list": "Manage Webinars",
     "/create-webinar": "Add New Webinar",
 

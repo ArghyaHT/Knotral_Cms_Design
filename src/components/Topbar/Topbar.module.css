@@ -115,121 +115,147 @@
             color: var(--text-gray);
         }
 
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            min-width: 140px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            z-index: 100;
+            padding: 6px 0;
+        }
 
-     /* =========================
+        .dropdownitem {
+            width: 100%;
+            padding: 10px 14px;
+            text-align: left;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .dropdownitem:hover {
+            background: #f5f5f5;
+        }
+
+
+        /* =========================
    TABLETS & SMALL LAPTOPS
    ========================= */
-@media (max-width: 1024px) {
-    .topbar {
-        padding: 0.8rem 1.5rem;
-    }
+        @media (max-width: 1024px) {
+            .topbar {
+                padding: 0.8rem 1.5rem;
+            }
 
-    .pagetitle {
-        font-size: 1.6rem;
-    }
+            .pagetitle {
+                font-size: 1.6rem;
+            }
 
-    .searchbox {
-        width: 220px;
-    }
-}
+            .searchbox {
+                width: 220px;
+            }
+        }
 
-/* =========================
+        /* =========================
    TABLETS & LARGE PHONES
    ========================= */
-@media (max-width: 768px) {
-    .topbar {
-        padding: 0.75rem 1rem;
-    }
+        @media (max-width: 768px) {
+            .topbar {
+                padding: 0.75rem 1rem;
+            }
 
-    .menutoggle {
-        display: block;
-    }
+            .menutoggle {
+                display: block;
+            }
 
-    .pagetitle {
-        font-size: 1.2rem;
-        margin-bottom: 0;
-    }
+            .pagetitle {
+                font-size: 1.2rem;
+                margin-bottom: 0;
+            }
 
-    .searchbox {
-        width: 180px;
-        padding: 0.5rem 0.8rem;
-    }
+            .searchbox {
+                width: 180px;
+                padding: 0.5rem 0.8rem;
+            }
 
-    .userinfo {
-        display: none;
-    }
+            .userinfo {
+                display: none;
+            }
 
-    .topbarright {
-        gap: 1rem;
-    }
-}
+            .topbarright {
+                gap: 1rem;
+            }
+        }
 
-/* =========================
+        /* =========================
    SMALL PHONES
    ========================= */
-@media (max-width: 480px) {
-    .topbar {
-        padding: 0.6rem 0.8rem;
-    }
+        @media (max-width: 480px) {
+            .topbar {
+                padding: 0.6rem 0.8rem;
+            }
 
-    .pagetitle {
-        font-size: 1rem;
-        letter-spacing: 0.5px;
-    }
+            .pagetitle {
+                font-size: 1rem;
+                letter-spacing: 0.5px;
+            }
 
-    .searchbox {
-        display: none;
-    }
+            .searchbox {
+                display: none;
+            }
 
-    .notificationbtn {
-        font-size: 1.1rem;
-    }
+            .notificationbtn {
+                font-size: 1.1rem;
+            }
 
-    .useravatar {
-        width: 34px;
-        height: 34px;
-        font-size: 0.85rem;
-    }
+            .useravatar {
+                width: 34px;
+                height: 34px;
+                font-size: 0.85rem;
+            }
 
-    .notificationbadge {
-        width: 16px;
-        height: 16px;
-        font-size: 0.65rem;
-    }
-}
+            .notificationbadge {
+                width: 16px;
+                height: 16px;
+                font-size: 0.65rem;
+            }
+        }
 
-/* =========================
+        /* =========================
    VERY SMALL PHONES (≤360px)
    ========================= */
-@media (max-width: 360px) {
-    .topbar {
-        padding: 0.5rem 0.6rem;
-    }
+        @media (max-width: 360px) {
+            .topbar {
+                padding: 0.5rem 0.6rem;
+            }
 
-    .pagetitle {
-        font-size: 0.9rem;
-        letter-spacing: 0.3px;
-    }
+            .pagetitle {
+                font-size: 0.9rem;
+                letter-spacing: 0.3px;
+            }
 
-    .topbarright {
-        gap: 0.6rem;
-    }
+            .topbarright {
+                gap: 0.6rem;
+            }
 
-    .notificationbtn {
-        font-size: 1rem;
-    }
+            .notificationbtn {
+                font-size: 1rem;
+            }
 
-    .useravatar {
-        width: 30px;
-        height: 30px;
-        font-size: 0.75rem;
-    }
+            .useravatar {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
 
-    .notificationbadge {
-        width: 14px;
-        height: 14px;
-        font-size: 0.6rem;
-        top: -4px;
-        right: -4px;
-    }
-}
+            .notificationbadge {
+                width: 14px;
+                height: 14px;
+                font-size: 0.6rem;
+                top: -4px;
+                right: -4px;
+            }
+        }

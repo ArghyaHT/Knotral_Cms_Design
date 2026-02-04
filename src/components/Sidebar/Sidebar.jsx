@@ -22,8 +22,8 @@ const Sidebar = React.forwardRef(({ open, webinars }, ref) => {
                 <div className={styles.navsection}>
                     <div className={styles.navsectiontitle}>Main</div>
                     <Link
-                        href="/"
-                        className={`${styles.navitem} ${pathname === "/" ? styles.active : ""}`}
+                        href="/dashboard"
+                        className={`${styles.navitem} ${pathname === "/dahsboard" ? styles.active : ""}`}
                     >
                         <span className={styles.navicon}>📊</span>
                         Dashboard

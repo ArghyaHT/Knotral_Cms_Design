@@ -413,7 +413,7 @@ const CreateWebinar = () => {
             <div className={styles.pageheader}>
                 <div>
                     <div className={styles.breadcrumb}>
-                        <a href="/">Dashboard</a> /{" "}
+                        <a href="/dashboard">Dashboard</a> /{" "}
                         <a href="/webinar-list">Webinars</a> / Add New
                     </div>
                     {/* <h1 className={styles.pagetitle}>Add New Webinar</h1> */}

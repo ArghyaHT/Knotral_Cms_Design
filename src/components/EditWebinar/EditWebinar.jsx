@@ -405,7 +405,7 @@ const EditWebinar = ({ webinar }) => {
 
         const formattedStartTime = formatTimeTo12Hour(startTime);
 
-        const cleanedSchemaMarkup = schemaMarkup?.trim();
+        // const cleanedSchemaMarkup = schemaMarkup?.trim();
 
         try {
             // Step 1: Update webinar
@@ -444,7 +444,7 @@ const EditWebinar = ({ webinar }) => {
                 //meta tags
                 metaTitle,
                 metaDescription,
-                schemaMarkup: cleanedSchemaMarkup
+                schemaMarkup,
 
             };
 
@@ -525,8 +525,8 @@ const EditWebinar = ({ webinar }) => {
 
             const validPastSessions = pastSessions.filter(
                 session =>
-                    session.title?.trim() &&
-                    session.youtubeUrl?.trim() &&
+                    session.title &&
+                    session.youtubeUrl &&
                     session.date
             );
 
@@ -630,7 +630,7 @@ const EditWebinar = ({ webinar }) => {
             <div className={styles.pageheader}>
                 <div>
                     <div className={styles.breadcrumb}>
-                        <a href="/">Dashboard</a> /{" "}
+                        <a href="/dashboard">Dashboard</a> /{" "}
                         <a href="/webinar-list">Webinars</a> / Edit Webinar
                     </div>
                     {/* <h1 className={styles.pagetitle}>Add New Webinar</h1> */}
@@ -1607,7 +1607,7 @@ const EditWebinar = ({ webinar }) => {
                         {/* Actions */}
                         <div className={styles.formactions}>
                             <button type="submit" className={`${styles.btn} ${styles.btnprimary}`}>
-                                Edit Webinar
+                                Save
                             </button>
                             {/* <button type="button" className={`${styles.btn} ${styles.btnsecondary}`}>
                                 Save as Draft
