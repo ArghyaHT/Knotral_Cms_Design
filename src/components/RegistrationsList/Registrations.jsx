@@ -63,6 +63,50 @@ const Registrations = () => {
     setFilteredRegistrations(filtered);
   }, [searchForm, searchDate, registrations]);
 
+  const downloadCSV = () => {
+    const headers = [
+      "First Name",
+      "Last Name",
+      "Email",
+      "Mobile",
+      "Form Name",
+      "Webinar Date",
+      "Company",
+      "Designation",
+      "City",
+    ];
+
+    // Map registrations data to CSV rows
+    const rows = filteredRegistrations.map(r => [
+      r.First_Name || "",
+      r.Last_Name || "",
+      r.Email || "",
+      r.Mobile || "",
+      r.FORM_NAME || "",
+      r.Webinar_Date_TIme
+        ? new Date(r.Webinar_Date_TIme).toLocaleString()
+        : "",
+      r.Company || "",
+      r.Designation || "",
+      r.City || "",
+    ]);
+
+    // Combine headers + rows
+    const csvContent =
+      [headers, ...rows].map(e => e.map(v => `"${v}"`).join(",")).join("\n");
+
+    // Create a blob and trigger download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "registrations.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+
   if (loading) return <div className={styles.status}>Loading registrations…</div>;
   if (error) return <div className={styles.error}>{error}</div>;
 
@@ -95,6 +139,9 @@ const Registrations = () => {
             Clear
           </button>
         )}
+        <button  className={styles.clearBtn} onClick={downloadCSV}>
+          Download CSV
+        </button>
       </div>
 
       {filteredRegistrations.length === 0 ? (
