@@ -1461,7 +1461,6 @@ const EditWebinar = ({ webinar }) => {
                                 </div>
 
                                 {/* Instructor Image */}
-                                {/* Instructor Image */}
                                 <div className={styles.formgroup}>
                                     <label className={styles.formlabel}>Instructor Image</label>
 

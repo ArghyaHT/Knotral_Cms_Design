@@ -157,8 +157,6 @@ const Registrations = () => {
                 <th>Form Name</th>
                 <th>Webinar Date</th>
                 <th>Company</th>
-                <th>Designation</th>
-                <th>City</th>
 
               </tr>
             </thead>
@@ -175,8 +173,6 @@ const Registrations = () => {
                       : "—"}
                   </td>
                   <td>{r.Company || "—"}</td>
-                  <td>{r.Designation || "—"}</td>
-                  <td>{r.City || "—"}</td>
                 </tr>
               ))}
             </tbody>
