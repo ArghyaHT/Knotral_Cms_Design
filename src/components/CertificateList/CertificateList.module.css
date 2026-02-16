@@ -327,8 +327,8 @@
 .smallModal h3 {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 15px;
 }
+
 
 .smallModal input,
 .smallModal textarea {
@@ -343,6 +343,15 @@
 .smallModal textarea {
   resize: vertical;
   min-height: 120px;
+}
+
+.moreTag {
+  background: #f1f1f1;
+  color: #555;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .smallModalActions {

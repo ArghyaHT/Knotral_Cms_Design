@@ -18,3 +18,21 @@
 .editorWrapper :global(.ProseMirror:focus) {
   outline: none;
 }
+
+@media (max-width: 768px) {
+  .editorWrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editorWrapper {
+    height: 120px;
+  }
+}
+
+@media (max-width: 360px) {
+  .editorWrapper {
+    height: 120px;
+  }
+}

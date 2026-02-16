@@ -27,10 +27,25 @@ const CertificateList = () => {
     const [showEmailModal, setShowEmailModal] = useState(false);
     const [emailSubject, setEmailSubject] = useState("");
     const [emailBody, setEmailBody] = useState("");
-    const [csvFile, setCsvFile] = useState(null);
+
+    const [isMobile, setIsMobile] = useState(false);
+
 
 
     const router = useRouter();
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        handleResize(); // run on mount
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const emailLimit = isMobile ? 4 : 8;
 
 
     // ==============================
@@ -517,27 +532,32 @@ const CertificateList = () => {
                                 {/* To Field */}
                                 <div className={styles.toField}>
                                     <h3>To</h3>
+
                                     <div className={styles.emailTagsWrapper}>
                                         {selectedEmails.length === 0 ? (
                                             <span className={styles.noRecipients}>
                                                 No recipients selected
                                             </span>
                                         ) : (
-                                            selectedEmails.map((email, index) => (
-                                                <span key={index} className={styles.emailTag}>
-                                                    {email}
-                                                </span>
-                                            ))
+                                            <>
+                                                {selectedEmails.slice(0, emailLimit).map((email, index) => (
+                                                    <span key={index} className={styles.emailTag}>
+                                                        {email}
+                                                    </span>
+                                                ))}
+
+                                                {selectedEmails.length > emailLimit && (
+                                                    <span className={styles.moreTag}>
+                                                        +{selectedEmails.length - emailLimit} more
+                                                    </span>
+                                                )}
+                                            </>
                                         )}
                                     </div>
                                 </div>
 
-                                {/* <textarea
-                                    rows="6"
-                                    placeholder="Write email body..."
-                                    value={emailBody}
-                                    onChange={(e) => setEmailBody(e.target.value)}
-                                /> */}
+
+
                                 <h3>Email Body</h3>
                                 <RichTextEditor
                                     value={emailBody}
