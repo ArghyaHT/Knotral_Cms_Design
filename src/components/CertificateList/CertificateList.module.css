@@ -451,41 +451,31 @@
   }
 }
 
-.monthFilter {
-  width: 100%;
-  margin-top: 12px;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #ffffff;
-  color: #333;
-  outline: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
+/* CSV Buttons Container */
+.csvActions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
-/* Hover */
-.monthFilter:hover {
-  border-color: #ff7a00; /* your CTA orange */
+/* Download Button */
+.downloadBtn {
+    padding: 10px 16px;
+    background-color: #f3f4f6;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
 }
 
-/* Focus */
-.monthFilter:focus {
-  border-color: #ff7a00;
-  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.15);
+.downloadBtn:hover {
+    background-color: #e5e7eb;
+    border-color: #ccc;
 }
 
-/* Optional: add custom arrow */
-.monthFilter {
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='20' height='20' fill='%23666' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7l5 5 5-5' stroke='%23666' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px;
-}
+
 
 /* ============================= */
 /* Tablets (below 992px) */
@@ -566,6 +556,17 @@
   .addEmailSection button {
     width: 100%;
   }
+
+    /* CSV buttons stack */
+  .csvActions {
+    flex-direction: column;
+  }
+
+  .downloadBtn,
+  .uploadBtn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 
@@ -601,6 +602,9 @@
   .addEmailSection button {
     font-size: 13px;
     padding: 7px;
+  }
+   .csvActions {
+    gap: 8px;
   }
 }
 

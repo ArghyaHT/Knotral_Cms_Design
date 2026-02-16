@@ -373,18 +373,23 @@ const CertificateList = () => {
                             <strong>Email</strong>, then upload it.
                         </p>
 
-                        <div style={{ marginBottom: "10px" }}>
-                            <button onClick={downloadSampleCSV}>
+                        <div className={styles.csvActions}>
+                            <button
+                                onClick={downloadSampleCSV}
+                                className={styles.downloadBtn}
+                            >
                                 ⬇ Download Sample CSV
                             </button>
-                        </div>
 
-                        <div className={styles.csvUpload}>
-                            <input
-                                type="file"
-                                accept=".csv"
-                                onChange={handleCSVUpload}
-                            />
+                            <label className={styles.uploadBtn}>
+                                📤 Upload CSV
+                                <input
+                                    type="file"
+                                    accept=".csv"
+                                    onChange={handleCSVUpload}
+                                    hidden
+                                />
+                            </label>
                         </div>
 
                         <div className={styles.tableWrapper}>
