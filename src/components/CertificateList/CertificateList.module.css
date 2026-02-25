@@ -571,9 +571,11 @@
     flex-direction: column;
   }
 
-  .downloadBtn,
-  .uploadBtn {
+  .downloadBtn {
     width: 100%;
+    text-align: center;
+  }
+  .uploadBtn {
     text-align: center;
   }
 }
