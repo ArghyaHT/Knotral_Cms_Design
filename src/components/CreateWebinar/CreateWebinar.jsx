@@ -5,13 +5,26 @@ import slugify from "slugify";
 import { useRouter } from "next/navigation";
 import { authFetch } from "@/utils/authFetch";
 
+const categories = [
+    "Franchise & Edupreneurs",
+    "Curriculum & Publishers",
+    "Early Years",
+    "EdTech & Digital Learning",
+    "SEL & Wellbeing",
+    "Teacher Professional Development",
+    "Inclusion & Special Needs",
+    "Higher Education",
+    "Corporate & Professional Development",
+    "Online & Alternate Schooling"
+];
+
 const CreateWebinar = () => {
     const router = useRouter();
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [organisedBy, setOrganisedBy] = useState("");
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState([]);
     const [date, setDate] = useState("");
     const [startTime, setStartTime] = useState("");
     const [duration, setDuration] = useState("");
@@ -432,7 +445,7 @@ const CreateWebinar = () => {
         setSlug("");
         setDescription("");
         setOrganisedBy("");
-        setCategory("");
+        setCategory([]);
         setDate("");
         setStartTime("");
         setDuration("");
@@ -528,7 +541,7 @@ const CreateWebinar = () => {
                             </div> */}
 
                             <div className={styles.formrow}>
-                                <div className={styles.formgroup}>
+                                {/* <div className={styles.formgroup}>
                                     <label className={`${styles.formlabel} ${styles.required}`}>Category</label>
                                     <select className={styles.formselect}
                                         value={category}
@@ -547,6 +560,32 @@ const CreateWebinar = () => {
                                         <option value="Corporate & Professional Development">Corporate & Professional Development</option>
                                         <option value="Online & Alternate Schooling">Online & Alternate Schooling</option>
                                     </select>
+                                </div> */}
+
+                                <div className={styles.formgroup}>
+                                    <label className={`${styles.formlabel} ${styles.required}`}>
+                                        Category
+                                    </label>
+
+                                    <div className={styles.checkboxGroup}>
+                                        {categories.map((cat) => (
+                                            <label key={cat} className={styles.checkboxLabel}>
+                                                <input
+                                                    type="checkbox"
+                                                    value={cat}
+                                                    checked={category.includes(cat)}
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            setCategory([...category, cat]);
+                                                        } else {
+                                                            setCategory(category.filter((item) => item !== cat));
+                                                        }
+                                                    }}
+                                                />
+                                                <span>{cat}</span>
+                                            </label>
+                                        ))}
+                                    </div>
                                 </div>
 
                                 <div className={styles.formgroup}>
@@ -562,6 +601,7 @@ const CreateWebinar = () => {
                                     />
                                 </div>
                             </div>
+
 
                             {/* <div className={styles.formgroup}>
                                 <label className={styles.formlabel}>

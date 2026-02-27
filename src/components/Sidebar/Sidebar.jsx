@@ -13,7 +13,7 @@ const Sidebar = React.forwardRef(({ open, webinars }, ref) => {
         >
 
             <div className={styles.sidebarheader}>
-                <a href="/" className={styles.sidebarlogo}>
+                <a href="/dashboard" className={styles.sidebarlogo}>
                     <img src="/knotralFoot.png" alt="Knotral" />
                 </a>
             </div>

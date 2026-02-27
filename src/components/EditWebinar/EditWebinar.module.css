@@ -410,6 +410,32 @@
             }
         }
 
+                .checkboxGroup {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 20px;
+        }
+
+        .checkboxLabel {
+            display: flex;
+            align-items: flex-start;
+            /* important */
+            gap: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .checkboxLabel input {
+            margin-top: 3px;
+            /* aligns checkbox with first text line */
+            flex-shrink: 0;
+            /* prevents checkbox resizing */
+        }
+
+        .checkboxLabel span {
+            line-height: 1.4;
+        }
+
         /* ----- Tablets ----- */
         @media (max-width: 768px) {
             .formrow {

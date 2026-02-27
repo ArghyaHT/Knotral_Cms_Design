@@ -3,13 +3,26 @@ import React, { useEffect, useState } from 'react'
 import styles from "./EditWebinar.module.css"
 import { useRouter } from 'next/navigation';
 
+const categories = [
+    "Franchise & Edupreneurs",
+    "Curriculum & Publishers",
+    "Early Years",
+    "EdTech & Digital Learning",
+    "SEL & Wellbeing",
+    "Teacher Professional Development",
+    "Inclusion & Special Needs",
+    "Higher Education",
+    "Corporate & Professional Development",
+    "Online & Alternate Schooling"
+];
+
 const EditWebinar = ({ webinar }) => {
     const router = useRouter();
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [organisedBy, setOrganisedBy] = useState("");
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState([]);
     const [date, setDate] = useState("");
     const [startTime, setStartTime] = useState("");
     const [duration, setDuration] = useState("");
@@ -362,7 +375,13 @@ const EditWebinar = ({ webinar }) => {
         setTitle(webinar.title || "");
         setDescription(webinar.description || "");
         setOrganisedBy(webinar.organisedBy || "");
-        setCategory(webinar.category || "");
+        setCategory(
+            Array.isArray(webinar.category)
+                ? webinar.category
+                : webinar.category
+                    ? [webinar.category] // fallback for old single string data
+                    : []
+        );
         setDate(webinar.date ? webinar.date.split("T")[0] : "");
         setStartTime(convertTo24Hour(webinar.startTime));
         setDuration(extractMinutes(webinar.duration));
@@ -657,7 +676,13 @@ const EditWebinar = ({ webinar }) => {
         setTitle(webinar.title || "");
         setDescription(webinar.description || "");
         setOrganisedBy(webinar.organisedBy || "");
-        setCategory(webinar.category || "");
+        setCategory(
+            Array.isArray(webinar.category)
+                ? webinar.category
+                : webinar.category
+                    ? [webinar.category] // fallback for old single string data
+                    : []
+        );
         setDate(webinar.date ? webinar.date.split("T")[0] : "");
         setStartTime(convertTo24Hour(webinar.startTime));
         setDuration(extractMinutes(webinar.duration));
@@ -761,20 +786,10 @@ const EditWebinar = ({ webinar }) => {
                                 />
                             </div>
 
-                            {/* <div className={styles.formgroup}>
-                                <label className={`${styles.formlabel} ${styles.required}`}>Full Description</label>
-                                <textarea
-                                    className={styles.formtextarea}
-                                    style={{ minHeight: "200px" }}
-                                    placeholder="Detailed description..."
-                                    required
-                                />
-                            </div> */}
 
                             <div className={styles.formrow}>
                                 <div className={styles.formgroup}>
-                                    <label className={`${styles.formlabel} ${styles.required}`}>Category</label>
-                                    <select className={styles.formselect}
+                                    {/* <select className={styles.formselect}
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
                                         required
@@ -790,7 +805,32 @@ const EditWebinar = ({ webinar }) => {
                                         <option value="Higher Education">Higher Education</option>
                                         <option value="Corporate & Professional Development">Corporate & Professional Development</option>
                                         <option value="Online & Alternate Schooling">Online & Alternate Schooling</option>
-                                    </select>
+                                    </select> */}
+                                    <div className={styles.formgroup}>
+  <label className={`${styles.formlabel} ${styles.required}`}>
+    Category
+  </label>
+
+  <div className={styles.checkboxGroup}>
+    {categories.map((cat) => (
+      <label key={cat} className={styles.checkboxLabel}>
+        <input
+          type="checkbox"
+          value={cat}
+          checked={category.includes(cat)}
+          onChange={(e) => {
+            if (e.target.checked) {
+              setCategory([...category, cat]);
+            } else {
+              setCategory(category.filter((item) => item !== cat));
+            }
+          }}
+        />
+        <span>{cat}</span>
+      </label>
+    ))}
+  </div>
+</div>
                                 </div>
 
                                 <div className={styles.formgroup}>
