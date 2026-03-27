@@ -36,6 +36,9 @@ const CreateWebinar = () => {
 
     const [bonus, setBonus] = useState("");
 
+    const [theme, setTheme] = useState("");
+
+
     const [slug, setSlug] = useState("");
     const [slugEdited, setSlugEdited] = useState(false);
 
@@ -61,7 +64,16 @@ const CreateWebinar = () => {
 
     const [schoolBenefitsFeatures, setSchoolBenefitsFeatures] = useState([""]);
 
+    const [schoolBenefitsWhyNeeded, setSchoolBenefitsWhyNeeded] = useState(["",]);
+
     const [resellerBenefitsFeatures, setResellerBenefitsFeatures] = useState([""]);
+
+    const [resellerBenifitsWhyNeeded, setResellerBenifitsWhyNeeded] = useState(["",]);
+
+    const [competitorBenefitsFeatures, setCompetitorBenefitsFeatures] = useState([""]);
+
+    const [competitorBenefitsWhyNeeded, setCompetitorBenefitsWhyNeeded] = useState(["",]);
+
 
     const [features, setFeatures] = useState([{ feature: "" }]);
 
@@ -142,6 +154,22 @@ const CreateWebinar = () => {
         );
     };
 
+    const addSchoolWhyNeeded = () => {
+        setSchoolBenefitsWhyNeeded([...schoolBenefitsWhyNeeded, ""]);
+    };
+
+    const removeSchoolWhyNeeded = (index) => {
+        setSchoolBenefitsWhyNeeded(
+            schoolBenefitsWhyNeeded.filter((_, i) => i !== index)
+        );
+    };
+
+    const handleSchoolWhyNeededChange = (index, value) => {
+        const updated = [...schoolBenefitsWhyNeeded];
+        updated[index] = value;
+        setSchoolBenefitsWhyNeeded(updated);
+    };
+
     const handleSchoolFeatureChange = (index, value) => {
         const updated = [...schoolBenefitsFeatures];
         updated[index] = value;
@@ -158,11 +186,63 @@ const CreateWebinar = () => {
         );
     };
 
+    const addResellerWhyNeeded = () => {
+        setResellerBenifitsWhyNeeded([...resellerBenifitsWhyNeeded, ""]);
+    };
+
+    const removeResellerWhyNeeded = (index) => {
+        setResellerBenifitsWhyNeeded(
+            resellerBenifitsWhyNeeded.filter((_, i) => i !== index)
+        );
+    };
+
+    const handleResellerWhyNeededChange = (index, value) => {
+        const updated = [...resellerBenifitsWhyNeeded];
+        updated[index] = value;
+        setResellerBenifitsWhyNeeded(updated);
+    };
+
     const handleResellerFeatureChange = (index, value) => {
         const updated = [...resellerBenefitsFeatures];
         updated[index] = value;
         setResellerBenefitsFeatures(updated);
     };
+
+
+    const addCompetitorFeature = () => {
+        setCompetitorBenefitsFeatures([...competitorBenefitsFeatures, ""]);
+    };
+
+    const removeCompetitorFeature = (index) => {
+        setCompetitorBenefitsFeatures(
+            competitorBenefitsFeatures.filter((_, i) => i !== index)
+        );
+    };
+
+    const addCompetitorWhyNeeded = () => {
+        setCompetitorBenefitsWhyNeeded([...competitorBenefitsWhyNeeded, ""]);
+    };
+
+    const removeCompetitorWhyNeeded = (index) => {
+        setCompetitorBenefitsWhyNeeded(
+            competitorBenefitsWhyNeeded.filter((_, i) => i !== index)
+        );
+    };
+
+    const handleCompetitorrWhyNeededChange = (index, value) => {
+        const updated = [...competitorBenefitsWhyNeeded];
+        updated[index] = value;
+        setCompetitorBenefitsWhyNeeded(updated);
+    };
+
+    const handleCompetitorFeatureChange = (index, value) => {
+        const updated = [...competitorBenefitsFeatures];
+        updated[index] = value;
+        setCompetitorBenefitsFeatures(updated);
+    };
+
+
+
 
     const addWebinarFeature = () => {
         setFeatures([...features, { feature: "" }]);
@@ -308,6 +388,7 @@ const CreateWebinar = () => {
                 title,
                 slug,
                 description,
+                theme,
                 organisedBy,
                 category,
                 date,
@@ -329,8 +410,10 @@ const CreateWebinar = () => {
                     features: teachersBenefitsFeatures.filter(Boolean),
                     whyNeeded: teachersBenefitsWhyNeeded.filter(Boolean)
                 },
-                schoolBenifits: { features: schoolBenefitsFeatures.filter(Boolean), whyNeeded: [] },
-                resellerBenifits: { features: resellerBenefitsFeatures.filter(Boolean), whyNeeded: [] },
+                schoolBenifits: { features: schoolBenefitsFeatures.filter(Boolean), whyNeeded: schoolBenefitsWhyNeeded.filter(Boolean) },
+                resellerBenifits: { features: resellerBenefitsFeatures.filter(Boolean), whyNeeded: resellerBenifitsWhyNeeded.filter(Boolean) },
+                competitionOrganizars: { features: competitorBenefitsFeatures.filter(Boolean), whyNeeded: competitorBenefitsWhyNeeded.filter(Boolean) },
+
                 attendeeBenefits: {
                     title: "Key Takeaways",
                     features: attendeeBenefitsFeatures.filter(Boolean),
@@ -455,13 +538,26 @@ const CreateWebinar = () => {
         setIsCertified(false);
         setIsOnDemand(false);
         setBonus("");
+
+        setTheme("");
+
+
         setLink("");
         setFeatures([{ feature: "" }]);
         setSessionAgenda([{ time: "", title: "" }]);
+
         setTeachersBenefitsFeatures([""]);
         setTeachersBenefitsWhyNeeded([""]);
+
         setSchoolBenefitsFeatures([""]);
+        setSchoolBenefitsWhyNeeded([""]);
+
         setResellerBenefitsFeatures([""]);
+        setResellerBenifitsWhyNeeded([""]);
+
+        setCompetitorBenefitsFeatures([""]);
+        setCompetitorBenefitsWhyNeeded([""]);
+
         setAttendeeBenefitsFeatures([""]);
         setMetaTitle("");
         setMetaDescription("");
@@ -528,6 +624,24 @@ const CreateWebinar = () => {
                                     onChange={(e) => setDescription(e.target.value)}
                                     required
                                 />
+                            </div>
+
+
+                            <div className={styles.formgroup}>
+                                <label className={`${styles.formlabel} ${styles.required}`}>
+                                    Webinar Theme
+                                </label>
+
+                                <select
+                                    className={styles.forminput}
+                                    value={theme}
+                                    onChange={(e) => setTheme(e.target.value)}
+                                    required
+                                >
+                                    <option value="">Select Theme</option>
+                                    <option value="theme1">Theme 1</option>
+                                    <option value="theme2">Theme 2</option>
+                                </select>
                             </div>
 
                             {/* <div className={styles.formgroup}>
@@ -654,6 +768,7 @@ const CreateWebinar = () => {
                                         required />
                                 </div>
                             </div>
+
                             <div className={styles.formrow}>
                                 <div className={styles.formgroup}>
                                     <label className={`${styles.formlabel} ${styles.required}`}>Duration (minutes)</label>
@@ -968,83 +1083,253 @@ const CreateWebinar = () => {
                             {/* School Benefits */}
                             <div className={styles.formgroup}>
                                 <label className={styles.formlabel}>School Benefits</label>
-                                {schoolBenefitsFeatures.map((feature, index) => (
-                                    <div className={styles.card} key={index}>
-                                        <input
-                                            type="text"
-                                            className={styles.forminput}
-                                            placeholder={`Benefit ${index + 1}`}
-                                            value={feature}
-                                            onChange={(e) =>
-                                                handleSchoolFeatureChange(index, e.target.value)
-                                            }
-                                        />
+                                <div className={styles.formgroup}>
+                                    <label className={styles.formlabel}>Features</label>
 
-                                        {schoolBenefitsFeatures.length > 1 && (
-                                            <button
-                                                type="button"
-                                                className={styles.btnremove}
-                                                onClick={() => removeSchoolFeature(index)}
-                                            >
-                                                Remove
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
+                                    {schoolBenefitsFeatures.map((feature, index) => (
+                                        <div className={styles.card} key={index}>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder={`Benefit ${index + 1}`}
+                                                value={feature}
+                                                onChange={(e) =>
+                                                    handleSchoolFeatureChange(index, e.target.value)
+                                                }
+                                            />
 
-                                <button
-                                    type="button"
-                                    className={`${styles.btn} ${styles.uploadbtn}`}
-                                    onClick={addSchoolFeature}
-                                >
-                                    Add Benefit
-                                </button>
+                                            {schoolBenefitsFeatures.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnremove}
+                                                    onClick={() => removeSchoolFeature(index)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
 
-                                <p className={styles.formhelp}>
-                                    Example: Improved institutional performance, Better teacher engagement
-                                </p>
+                                    <button
+                                        type="button"
+                                        className={`${styles.btn} ${styles.uploadbtn}`}
+                                        onClick={addSchoolFeature}
+                                    >
+                                        Add Benefit
+                                    </button>
+
+                                    <p className={styles.formhelp}>
+                                        Example: Improved institutional performance, Better teacher engagement
+                                    </p>
+                                </div>
+
+                                <div className={styles.formgroup}>
+                                    <label className={styles.formlabel}>Why Needed</label>
+                                    {schoolBenefitsWhyNeeded.map((reason, index) => (
+                                        <div className={styles.card} key={index}>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder={`Reason ${index + 1}`}
+                                                value={reason}
+                                                onChange={(e) =>
+                                                    handleSchoolWhyNeededChange(index, e.target.value)
+                                                }
+                                            />
+
+                                            {schoolBenefitsWhyNeeded.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnremove}
+                                                    onClick={() => removeSchoolWhyNeeded(index)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        type="button"
+                                        className={`${styles.btn} ${styles.uploadbtn}`}
+                                        onClick={addSchoolWhyNeeded}
+                                    >
+                                        Add Reason
+                                    </button>
+
+                                    <p className={styles.formhelp}>
+                                        Example: To enhance classroom performance, To support professional growth
+                                    </p>
+                                </div>
+
                             </div>
 
                             {/* Reseller Benefits */}
                             <div className={styles.formgroup}>
                                 <label className={styles.formlabel}>Reseller Benefits</label>
+                                <div className={styles.formgroup}>
+                                    <label className={styles.formlabel}>Features</label>
+                                    {resellerBenefitsFeatures.map((feature, index) => (
+                                        <div className={styles.card} key={index}>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder={`Benefit ${index + 1}`}
+                                                value={feature}
+                                                onChange={(e) =>
+                                                    handleResellerFeatureChange(index, e.target.value)
+                                                }
+                                            />
 
-                                {resellerBenefitsFeatures.map((feature, index) => (
-                                    <div className={styles.card} key={index}>
-                                        <input
-                                            type="text"
-                                            className={styles.forminput}
-                                            placeholder={`Benefit ${index + 1}`}
-                                            value={feature}
-                                            onChange={(e) =>
-                                                handleResellerFeatureChange(index, e.target.value)
-                                            }
-                                        />
+                                            {resellerBenefitsFeatures.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnremove}
+                                                    onClick={() => removeResellerFeature(index)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
 
-                                        {resellerBenefitsFeatures.length > 1 && (
-                                            <button
-                                                type="button"
-                                                className={styles.btnremove}
-                                                onClick={() => removeResellerFeature(index)}
-                                            >
-                                                Remove
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
+                                    <button
+                                        type="button"
+                                        className={`${styles.btn} ${styles.uploadbtn}`}
+                                        onClick={addResellerFeature}
+                                    >
+                                        Add Benefit
+                                    </button>
 
-                                <button
-                                    type="button"
-                                    className={`${styles.btn} ${styles.uploadbtn}`}
-                                    onClick={addResellerFeature}
-                                >
-                                    Add Benefit
-                                </button>
+                                    <p className={styles.formhelp}>
+                                        Example: New revenue opportunities, Expanded market reach
+                                    </p>
+                                </div>
 
-                                <p className={styles.formhelp}>
-                                    Example: New revenue opportunities, Expanded market reach
-                                </p>
+                                <div className={styles.formgroup}>
+                                    <label className={styles.formlabel}>Why Needed</label>
+                                    {resellerBenifitsWhyNeeded.map((reason, index) => (
+                                        <div className={styles.card} key={index}>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder={`Reason ${index + 1}`}
+                                                value={reason}
+                                                onChange={(e) =>
+                                                    handleResellerWhyNeededChange(index, e.target.value)
+                                                }
+                                            />
+
+                                            {resellerBenifitsWhyNeeded.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnremove}
+                                                    onClick={() => removeResellerWhyNeeded(index)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        type="button"
+                                        className={`${styles.btn} ${styles.uploadbtn}`}
+                                        onClick={addResellerWhyNeeded}
+                                    >
+                                        Add Reason
+                                    </button>
+
+                                    <p className={styles.formhelp}>
+                                        Example: To enhance classroom performance, To support professional growth
+                                    </p>
+                                </div>
+
                             </div>
+
+                            {/* Competitor Benifits */}
+                            <div className={styles.formgroup}>
+                                <label className={styles.formlabel}>Competitor Benefits</label>
+                                <div className={styles.formgroup}>
+                                    <label className={styles.formlabel}>Features</label>
+                                    {competitorBenefitsFeatures.map((feature, index) => (
+                                        <div className={styles.card} key={index}>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder={`Benefit ${index + 1}`}
+                                                value={feature}
+                                                onChange={(e) =>
+                                                    handleCompetitorFeatureChange(index, e.target.value)
+                                                }
+                                            />
+
+                                            {competitorBenefitsFeatures.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnremove}
+                                                    onClick={() => removeCompetitorFeature(index)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        type="button"
+                                        className={`${styles.btn} ${styles.uploadbtn}`}
+                                        onClick={addCompetitorFeature}
+                                    >
+                                        Add Benefit
+                                    </button>
+
+                                    <p className={styles.formhelp}>
+                                        Example: New revenue opportunities, Expanded market reach
+                                    </p>
+                                </div>
+
+                                <div className={styles.formgroup}>
+                                    <label className={styles.formlabel}>Why Needed</label>
+                                    {competitorBenefitsWhyNeeded.map((reason, index) => (
+                                        <div className={styles.card} key={index}>
+                                            <input
+                                                type="text"
+                                                className={styles.forminput}
+                                                placeholder={`Reason ${index + 1}`}
+                                                value={reason}
+                                                onChange={(e) =>
+                                                    handleCompetitorrWhyNeededChange(index, e.target.value)
+                                                }
+                                            />
+
+                                            {resellerBenifitsWhyNeeded.length > 1 && (
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnremove}
+                                                    onClick={() => removeCompetitorWhyNeeded(index)}
+                                                >
+                                                    Remove
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+
+                                    <button
+                                        type="button"
+                                        className={`${styles.btn} ${styles.uploadbtn}`}
+                                        onClick={addCompetitorWhyNeeded}
+                                    >
+                                        Add Reason
+                                    </button>
+
+                                    <p className={styles.formhelp}>
+                                        Example: To enhance classroom performance, To support professional growth
+                                    </p>
+                                </div>
+
+                            </div>
+
 
                             {/* Attendee Benefits */}
                             <div className={styles.formgroup}>
@@ -1403,7 +1688,7 @@ const CreateWebinar = () => {
 
                         {/* Certificate & CPD */}
                         <div className={styles.formsection}>
-                            <h2 className={styles.sectiontitle}>Certificate & CPD</h2>
+                            <h2 className={styles.sectiontitle}>Certificate</h2>
 
                             <div className={styles.formgroup}>
                                 <div className={styles.checkboxitem}>
