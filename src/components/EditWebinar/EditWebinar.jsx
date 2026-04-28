@@ -32,6 +32,10 @@ const EditWebinar = ({ webinar }) => {
     const [isCertified, setIsCertified] = useState(false);
     const [isOnDemand, setIsOnDemand] = useState(false);
 
+    const [joiningLink, setJoiningLink] = useState("");
+    const [meetingId, setMeetingId] = useState("");
+    const [passcode, setPasscode] = useState("");
+
     const [bonus, setBonus] = useState("");
 
     const [theme, setTheme] = useState("");
@@ -468,6 +472,9 @@ const EditWebinar = ({ webinar }) => {
         setIsLive(webinar.isLive ?? false);
         setIsCertified(webinar.isCertified ?? false);
         setIsOnDemand(webinar.isOnDemand ?? false);
+        setJoiningLink(webinar.joiningLink || "");
+        setMeetingId(webinar.meetingId || "");
+        setPasscode(webinar.passcode || "");
 
         setBonus(webinar.bonus?.title || "");
 
@@ -620,6 +627,9 @@ const EditWebinar = ({ webinar }) => {
                 duration: durationToStore,
                 price,
                 isFree,
+                joiningLink,
+                meetingId,
+                passcode,
                 isLive,
                 link,
                 isCertified,
@@ -836,7 +846,7 @@ const EditWebinar = ({ webinar }) => {
             webinar.resellerBenifits?.whyNeeded?.length ? webinar.resellerBenifits.whyNeeded : [""]
         );
 
-           setCompetitorBenefitsFeatures(
+        setCompetitorBenefitsFeatures(
             webinar.competitionOrganizars?.features?.length ? webinar.competitionOrganizars.features : [""]
         );
 
@@ -910,7 +920,7 @@ const EditWebinar = ({ webinar }) => {
                             </div>
 
 
-                             <div className={styles.formgroup}>
+                            <div className={styles.formgroup}>
                                 <label className={`${styles.formlabel} ${styles.required}`}>
                                     Webinar Theme
                                 </label>
@@ -1350,7 +1360,7 @@ const EditWebinar = ({ webinar }) => {
                                 </div>
                             </div>
 
-                                                      {/* School Benefits */}
+                            {/* School Benefits */}
                             <div className={styles.formgroup}>
                                 <label className={styles.formlabel}>School Benefits</label>
                                 <div className={styles.formgroup}>
@@ -1951,6 +1961,48 @@ const EditWebinar = ({ webinar }) => {
                         >
                             Add Instructor
                         </button>
+
+
+                        <div className={styles.formsection}>
+                            <h2 className={styles.sectiontitle}>Meeting Info</h2>
+
+                            <div className={styles.formgroup}>
+                                <label className={`${styles.formlabel} ${styles.required}`}>Joining Link</label>
+                                <input
+                                    type="text"
+                                    className={styles.forminput}
+                                    placeholder="Joining link for the webinar"
+                                    value={joiningLink}
+                                    onChange={(e) => setJoiningLink(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.formgroup}>
+                                <label className={`${styles.formlabel} ${styles.required}`}>Meeting ID</label>
+                                <input
+                                    type="text"
+                                    className={styles.forminput}
+                                    placeholder="Meeting ID for the webinar"
+                                    value={meetingId}
+                                    onChange={(e) => setMeetingId(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className={styles.formgroup}>
+                                <label className={`${styles.formlabel} ${styles.required}`}>Passcode</label>
+                                <input
+                                    type="text"
+                                    className={styles.forminput}
+                                    placeholder="Passcode for the webinar"
+                                    value={passcode}
+                                    onChange={(e) => setPasscode(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                        </div>
 
 
                         {/* Past Sessions */}
